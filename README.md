@@ -1,19 +1,26 @@
 ## Rust HTTP repro
 
 ```
-Mo in D:\dylibso\x\extism-http\host λ cargo run .
-   Compiling rust-host v0.1.0 (D:\dylibso\x\extism-http\host)
-    Finished dev [unoptimized + debuginfo] target(s) in 4.58s
+Mo in D:\dylibso\x\extism-http\host on master λ cargo run .
+    Finished dev [unoptimized + debuginfo] target(s) in 0.20s
      Running `target\debug\rust-host.exe .`
 thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Call failed
 
 Caused by:
     0: error while executing at wasm backtrace:
-           0: 0xd403 - <unknown>!runtime.run$1
-           1: 0xc9fe - <unknown>!runtime.run$1$gowrapper
-           2:  0x459 - <unknown>!tinygo_launch
-           3: 0xc8d2 - <unknown>!_start
-       note: using the `WASMTIME_BACKTRACE_DETAILS=1` environment variable may show more debugging information
+           0: 0xd403 - (*github.com/extism/go-pdk.HTTPRequest).Send
+                           at /home/mo/go/pkg/mod/github.com/extism/go-pdk@v0.0.0-20230119214914-65bffbeb3e64/extism_pdk.go:257:33              - main.main
+                           at /mnt/d/dylibso/x/extism-http/plugin/main.go:13:17              - runtime.run$1
+                           at /usr/local/lib/tinygo/src/runtime/scheduler_any.go:25:11
+           1: 0xc9fe - <goroutine wrapper>
+                           at /usr/local/lib/tinygo/src/runtime/scheduler_any.go:23:2
+           2:  0x459 - tinygo_launch
+                           at /usr/local/lib/tinygo/src/internal/task/task_asyncify_wasm.S:59
+           3: 0xc8d2 - (*internal/task.Task).Resume
+                           at /usr/local/lib/tinygo/src/internal/task/task_asyncify.go:109:17              - runtime.scheduler
+                           at /usr/local/lib/tinygo/src/runtime/scheduler.go:236:11              - runtime.run
+                           at /usr/local/lib/tinygo/src/runtime/scheduler_any.go:28:11              - _start
+                           at /usr/local/lib/tinygo/src/runtime/runtime_wasm_wasi.go:21:5
     1: invalid handle offset: 1114152', src\main.rs:11:51
 stack backtrace:
    0:     0x7ff71c15fa62 - std::backtrace_rs::backtrace::dbghelp::trace
@@ -75,9 +82,9 @@ stack backtrace:
   28:     0x7ff71c15392e - std::panicking::try
                                at /rustc/90c541806f23a127002de5b4038be731ba1458ca/library\std\src\panicking.rs:449
   29:     0x7ff71c15392e - std::panic::catch_unwind
-                               at /rustc/90c541806f23a127002de5b4038be731ba1458ca/library\std\src\panic.rs:140
+                               at /rustc/90c541806f23a127002de5b4038be731ba1458ca/library\std\src\panic.rs:140  
   30:     0x7ff71c15392e - std::rt::lang_start_internal
-                               at /rustc/90c541806f23a127002de5b4038be731ba1458ca/library\std\src\rt.rs:148     
+                               at /rustc/90c541806f23a127002de5b4038be731ba1458ca/library\std\src\rt.rs:148
   31:     0x7ff71abbb8ea - std::rt::lang_start<tuple$<> >
                                at /rustc/90c541806f23a127002de5b4038be731ba1458ca\library\std\src\rt.rs:165     
   32:     0x7ff71abbc069 - main
